@@ -16,21 +16,16 @@
  *
  */
 
-package fugo_test
+package fp
 
-import (
-	"fugo"
-	"reflect"
-	"testing"
-)
-
-func TestMap(t *testing.T) {
-	aSlice := []int{1, 2, 3, 4, 5}
-
-	mapped := fugo.Map(aSlice, func(x int) int { return x * x })
-
-	expected := []int{1, 4, 9, 16, 25}
-	if !reflect.DeepEqual(*mapped, expected) {
-		t.Errorf("expected %v, but got %v", expected, mapped)
+// Filter takes a slice and a filter function and returns a new slice containing only the elements that pass the filter.
+// The function preserves the order of the elements in the original slice and returns an empty slice if the input slice is nil or empty.
+func Filter[E any](slice []E, filterFn func(E) bool) []E {
+	filtered := make([]E, 0)
+	for _, item := range slice {
+		if filterFn(item) {
+			filtered = append(filtered, item)
+		}
 	}
+	return filtered
 }

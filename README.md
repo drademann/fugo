@@ -1,3 +1,3 @@
 # fugo
 
-Functional library for Go.
+Go library for functional programming and more.

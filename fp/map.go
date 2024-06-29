@@ -16,13 +16,13 @@
  *
  */
 
-package fugo
+package fp
 
 // Map applies a mapping function to each element of the given slice and returns a new slice of mapped values.
-func Map[E any, O any](slice []E, mapFn func(E) O) *[]O {
+func Map[E any, O any](slice []E, mapFn func(E) O) []O {
 	mapped := make([]O, len(slice))
 	for i, v := range slice {
 		mapped[i] = mapFn(v)
 	}
-	return &mapped
+	return mapped
 }
