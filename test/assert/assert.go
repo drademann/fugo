@@ -1,4 +1,5 @@
 /*
+ *
  * Copyright 2024-2024 The Fugo Authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -74,6 +75,19 @@ func ContainsInAnyOrder[E comparable](t *testing.T, actual []E, expected []E) {
 	for _, expectedValue := range expected {
 		if !slices.Contains(actual, expectedValue) {
 			t.Errorf("expected %v to contain all of %v", actual, expected)
+			return
+		}
+	}
+}
+
+// EqualSlice is a function that compares the elements of two slices for equality.
+func EqualSlice[E comparable](t *testing.T, actual []E, expected []E) {
+	if len(actual) != len(expected) {
+		t.Errorf("expected slice %v, but got %v with different length %d", expected, actual, len(actual))
+	}
+	for i, _ := range actual {
+		if actual[i] != expected[i] {
+			t.Errorf("expected slice %v, but got %v", expected, actual)
 			return
 		}
 	}

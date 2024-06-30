@@ -1,6 +1,6 @@
 /*
  *
- * Copyright 2024-2024 The Haora Authors
+ * Copyright 2024-2024 The Fugo Authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ package assert_test
 
 import (
 	"bytes"
-	"fugo/test/assert"
+	"github.com/drademann/fugo/test/assert"
 	"testing"
 	"time"
 )
@@ -63,4 +63,8 @@ func ExampleDurationString() {
 
 func TestContainsInAnyOrder(t *testing.T) {
 	assert.ContainsInAnyOrder(t, []string{"a", "b", "c"}, []string{"c", "b", "a"})
+}
+
+func TestAssertEqualSlice(t *testing.T) {
+	assert.EqualSlice(t, []string{"a", "b", "c"}, []string{"a", "b", "c"})
 }
