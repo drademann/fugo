@@ -19,6 +19,7 @@ package assert
 
 import (
 	"bytes"
+	"slices"
 	"strings"
 	"testing"
 	"time"
@@ -59,5 +60,21 @@ func DurationString(t *testing.T, d time.Duration, expected string) {
 	}
 	if d.String() != expected {
 		t.Errorf("expected duration string of %q, but got %q", expected, d.String())
+	}
+}
+
+// ContainsInAnyOrder is a function to compare a given actual slice with an expected slice,
+// checking if the actual slice contains all the elements in the expected slice in any order.
+func ContainsInAnyOrder[E comparable](t *testing.T, actual []E, expected []E) {
+	t.Helper()
+	if len(actual) != len(expected) {
+		t.Errorf("expected %d elements, but got %d", len(expected), len(actual))
+		return
+	}
+	for _, expectedValue := range expected {
+		if !slices.Contains(actual, expectedValue) {
+			t.Errorf("expected %v to contain all of %v", actual, expected)
+			return
+		}
 	}
 }

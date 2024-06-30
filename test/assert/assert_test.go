@@ -60,3 +60,7 @@ func ExampleDurationString() {
 	assert.DurationString(t, 1*time.Hour, "1h0m0s")
 	assert.DurationString(t, 15*time.Minute, "15m")
 }
+
+func TestContainsInAnyOrder(t *testing.T) {
+	assert.ContainsInAnyOrder(t, []string{"a", "b", "c"}, []string{"c", "b", "a"})
+}
