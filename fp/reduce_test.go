@@ -20,17 +20,33 @@ package fp_test
 
 import (
 	"fugo/fp"
-	"reflect"
 	"testing"
 )
 
-func TestFilter(t *testing.T) {
+func TestReduce(t *testing.T) {
 	aSlice := []int{1, 2, 3, 4, 5}
 
-	filtered := fp.Filter(aSlice, func(x int) bool { return x%2 != 0 })
+	sum := fp.Reduce(aSlice, func(acc int, n int) int { return acc + n })
 
-	expected := []int{1, 3, 5}
-	if !reflect.DeepEqual(filtered, expected) {
-		t.Errorf("expected %v but got %v", expected, filtered)
+	if sum != 15 {
+		t.Errorf("expected 15, got %d", sum)
+	}
+}
+
+func TestReduceInit(t *testing.T) {
+	aSlice := []int{1, 2, 3, 4, 5}
+
+	sum := fp.ReduceInit(10, aSlice, func(acc int, n int) int { return acc + n })
+
+	if sum != 25 {
+		t.Errorf("expected 25, got %d", sum)
+	}
+}
+
+func TestReduceInit_givenEmptySlice_shouldReturnInitValue(t *testing.T) {
+	sum := fp.ReduceInit(7, []int{}, func(acc int, n int) int { return acc + n })
+
+	if sum != 7 {
+		t.Errorf("expected 7, got %d", sum)
 	}
 }

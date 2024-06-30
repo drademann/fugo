@@ -16,21 +16,19 @@
  *
  */
 
-package fp_test
+package fp
 
-import (
-	"fugo/fp"
-	"reflect"
-	"testing"
-)
-
-func TestFilter(t *testing.T) {
-	aSlice := []int{1, 2, 3, 4, 5}
-
-	filtered := fp.Filter(aSlice, func(x int) bool { return x%2 != 0 })
-
-	expected := []int{1, 3, 5}
-	if !reflect.DeepEqual(filtered, expected) {
-		t.Errorf("expected %v but got %v", expected, filtered)
+func Reduce[E any](slice []E, reduceFn func(E, E) E) E {
+	if len(slice) == 0 {
+		panic("empty slice")
 	}
+	result := slice[0]
+	for i := 1; i < len(slice); i++ {
+		result = reduceFn(result, slice[i])
+	}
+	return result
+}
+
+func ReduceInit[E any](initValue E, slice []E, reduceFn func(E, E) E) E {
+	return Reduce(append([]E{initValue}, slice...), reduceFn)
 }
