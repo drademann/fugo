@@ -82,10 +82,11 @@ func ContainsInAnyOrder[E comparable](t *testing.T, actual []E, expected []E) {
 
 // EqualSlice is a function that compares the elements of two slices for equality.
 func EqualSlice[E comparable](t *testing.T, actual []E, expected []E) {
+	t.Helper()
 	if len(actual) != len(expected) {
 		t.Errorf("expected slice %v, but got %v with different length %d", expected, actual, len(actual))
 	}
-	for i, _ := range actual {
+	for i := range actual {
 		if actual[i] != expected[i] {
 			t.Errorf("expected slice %v, but got %v", expected, actual)
 			return
