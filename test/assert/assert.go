@@ -20,11 +20,28 @@ package assert
 
 import (
 	"bytes"
+	"errors"
 	"slices"
 	"strings"
 	"testing"
 	"time"
 )
+
+// ErrorString is a function that compares the error string representation with the expected string.
+func ErrorString(t *testing.T, err error, expected string) {
+	t.Helper()
+	if err.Error() != expected {
+		t.Errorf("expected error %q, but got %q", expected, err.Error())
+	}
+}
+
+// ErrorIs is a function to check if the given error matches the expected error using errors.Is().
+func ErrorIs(t *testing.T, err, expected error) {
+	t.Helper()
+	if !errors.Is(err, expected) {
+		t.Errorf("expected error %v, but got %v", expected, err)
+	}
+}
 
 // NoError is a function to check if the given error is nil. If the error is not nil, it raises an error.
 func NoError(t *testing.T, err error) {

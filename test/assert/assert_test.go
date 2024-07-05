@@ -20,12 +20,23 @@ package assert_test
 
 import (
 	"bytes"
+	"fmt"
 	"github.com/drademann/fugo/test/assert"
 	"testing"
 	"time"
 )
 
-func TestNoError(t *testing.T) {
+func TestAssertErrorString(t *testing.T) {
+	err := fmt.Errorf("an error")
+	assert.ErrorString(t, err, "an error")
+}
+
+func TestAssertErrorIs(t *testing.T) {
+	err := fmt.Errorf("an error")
+	assert.ErrorIs(t, err, err)
+}
+
+func TestAssertNoError(t *testing.T) {
 	assert.NoError(t, nil)
 }
 
