@@ -26,6 +26,14 @@ import (
 	"time"
 )
 
+// NoError is a function to check if the given error is nil. If the error is not nil, it raises an error.
+func NoError(t *testing.T, err error) {
+	t.Helper()
+	if err != nil {
+		t.Errorf("unexpected error: %v", err)
+	}
+}
+
 // Output is a function to compare a given output with an expected output and raise an error if they don't match.
 // It removes any leading newline character from the expected output and removes any tab characters.
 func Output(t *testing.T, out *bytes.Buffer, expected string) {

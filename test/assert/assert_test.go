@@ -25,6 +25,10 @@ import (
 	"time"
 )
 
+func TestNoError(t *testing.T) {
+	assert.NoError(t, nil)
+}
+
 func TestAssertOutput(t *testing.T) {
 	out := bytes.NewBufferString("Hello World\n")
 
