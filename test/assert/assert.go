@@ -30,6 +30,9 @@ import (
 // ErrorString is a function that compares the error string representation with the expected string.
 func ErrorString(t *testing.T, err error, expected string) {
 	t.Helper()
+	if err == nil {
+		t.Fatalf("expected an error %q, but got none", expected)
+	}
 	if err.Error() != expected {
 		t.Errorf("expected error %q, but got %q", expected, err.Error())
 	}
