@@ -108,6 +108,20 @@ func ContainsInAnyOrder[E comparable](t *testing.T, actual []E, expected []E) {
 	}
 }
 
+func True(t *testing.T, actual bool) {
+	t.Helper()
+	if !actual {
+		t.Error("expected true, but got false")
+	}
+}
+
+func False(t *testing.T, actual bool) {
+	t.Helper()
+	if actual {
+		t.Error("expected false, but got true")
+	}
+}
+
 // EqualInt compares two integer values
 func EqualInt(t *testing.T, expected, actual int) {
 	t.Helper()

@@ -80,6 +80,14 @@ func TestContainsInAnyOrder(t *testing.T) {
 	assert.ContainsInAnyOrder(t, []string{"a", "b", "c"}, []string{"c", "b", "a"})
 }
 
+func TestAssertTrue(t *testing.T) {
+	assert.True(t, true)
+}
+
+func TestAssertFalse(t *testing.T) {
+	assert.False(t, false)
+}
+
 func TestAssertEqualInt(t *testing.T) {
 	assert.EqualInt(t, 1, 1)
 }
