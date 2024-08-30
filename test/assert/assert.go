@@ -31,10 +31,10 @@ import (
 func ErrorString(t *testing.T, err error, expected string) {
 	t.Helper()
 	if err == nil {
-		t.Fatalf("expected an error %q, but got none", expected)
+		t.Fatalf("expected an error %q but got none", expected)
 	}
 	if err.Error() != expected {
-		t.Errorf("expected error %q, but got %q", expected, err.Error())
+		t.Errorf("expected error %q but got %q", expected, err.Error())
 	}
 }
 
@@ -42,7 +42,7 @@ func ErrorString(t *testing.T, err error, expected string) {
 func ErrorIs(t *testing.T, err, expected error) {
 	t.Helper()
 	if !errors.Is(err, expected) {
-		t.Errorf("expected error %v, but got %v", expected, err)
+		t.Errorf("expected error %v but got %v", expected, err)
 	}
 }
 
@@ -63,7 +63,7 @@ func Output(t *testing.T, out *bytes.Buffer, expected string) {
 	}
 	expected = strings.ReplaceAll(expected, "\t", "")
 	if out.String() != expected {
-		t.Errorf("expected output \n%q, but got \n%q", expected, out.String())
+		t.Errorf("expected output \n%q but got \n%q", expected, out.String())
 	}
 }
 
@@ -71,7 +71,7 @@ func Output(t *testing.T, out *bytes.Buffer, expected string) {
 func Duration(t *testing.T, d, expected time.Duration) {
 	t.Helper()
 	if d != expected {
-		t.Errorf("expected duration of %v, but got %v", expected, d)
+		t.Errorf("expected duration of %v but got %v", expected, d)
 	}
 }
 
@@ -88,7 +88,7 @@ func DurationString(t *testing.T, d time.Duration, expected string) {
 		expected = expected + "0s"
 	}
 	if d.String() != expected {
-		t.Errorf("expected duration string of %q, but got %q", expected, d.String())
+		t.Errorf("expected duration string of %q but got %q", expected, d.String())
 	}
 }
 
@@ -97,7 +97,7 @@ func DurationString(t *testing.T, d time.Duration, expected string) {
 func ContainsInAnyOrder[E comparable](t *testing.T, actual []E, expected []E) {
 	t.Helper()
 	if len(actual) != len(expected) {
-		t.Errorf("expected %d elements, but got %d", len(expected), len(actual))
+		t.Errorf("expected %d elements but got %d", len(expected), len(actual))
 		return
 	}
 	for _, expectedValue := range expected {
@@ -111,22 +111,31 @@ func ContainsInAnyOrder[E comparable](t *testing.T, actual []E, expected []E) {
 func True(t *testing.T, actual bool) {
 	t.Helper()
 	if !actual {
-		t.Error("expected true, but got false")
+		t.Error("expected true but got false")
 	}
 }
 
 func False(t *testing.T, actual bool) {
 	t.Helper()
 	if actual {
-		t.Error("expected false, but got true")
+		t.Error("expected false but got true")
 	}
 }
 
-// EqualInt compares two integer values
-func EqualInt(t *testing.T, expected, actual int) {
+// Equal compares two comparable values
+func Equal[T comparable](t *testing.T, expected, actual T) {
 	t.Helper()
 	if expected != actual {
-		t.Errorf("expected %d, but got %d", expected, actual)
+		t.Errorf("expected %s but got %s", toString(expected), toString(actual))
+	}
+}
+
+func toString[T comparable](v T) string {
+	switch val := any(v).(type) {
+	case string:
+		return fmt.Sprintf("%q", val)
+	default:
+		return fmt.Sprintf("%v", val)
 	}
 }
 
@@ -134,11 +143,11 @@ func EqualInt(t *testing.T, expected, actual int) {
 func EqualSlice[E comparable](t *testing.T, actual []E, expected []E) {
 	t.Helper()
 	if len(actual) != len(expected) {
-		t.Errorf("expected slice %v, but got %v with different length %d", expected, actual, len(actual))
+		t.Errorf("expected slice %v but got %v with different length %d", expected, actual, len(actual))
 	}
 	for i := range actual {
 		if actual[i] != expected[i] {
-			t.Errorf("expected slice %v, but got %v", expected, actual)
+			t.Errorf("expected slice %v but got %v", expected, actual)
 			return
 		}
 	}

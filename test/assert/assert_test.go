@@ -89,7 +89,11 @@ func TestAssertFalse(t *testing.T) {
 }
 
 func TestAssertEqualInt(t *testing.T) {
-	assert.EqualInt(t, 1, 1)
+	assert.Equal(t, 1, 1)
+}
+
+func TestAssertEqualString(t *testing.T) {
+	assert.Equal(t, "abc", "abc")
 }
 
 func TestAssertEqualSlice(t *testing.T) {
